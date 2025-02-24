@@ -1,3 +1,7 @@
+
+## 0.2.2
+Bump version to v0.2.2 and make the location parameter of the CherriFile class constructor not required, with a default value of './logs'.
+
 ## 0.2.0
 
 - You can log to file system by providing `CherriFile` logger to `CherriLog.logTo` method.

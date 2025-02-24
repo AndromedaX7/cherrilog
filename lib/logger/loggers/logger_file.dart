@@ -8,7 +8,7 @@ import 'package:dart_art/dart_art.dart';
 class CherriFile extends CherriLogger {
   late String fileNamePattern = '@yyyy-@MM-@dd-@HH-@id.log';
 
-  late String location = './logs';
+  String location;
 
   late Duration shelfLife = const Duration(days: 20);
 
@@ -18,11 +18,12 @@ class CherriFile extends CherriLogger {
 
   late BinarySize singleFileSizeLimit = BinarySize.parse('10 MB')!;
 
-  late int clearMode = CherriFileClearMode.oldFiles | CherriFileClearMode.outSizedFiles;
+  late int clearMode =
+      CherriFileClearMode.oldFiles | CherriFileClearMode.outSizedFiles;
 
   late int _fileId = 0;
 
-  CherriFile() {
+  CherriFile({this.location = "./logs"}) {
     _fileId = getNextId();
   }
 
