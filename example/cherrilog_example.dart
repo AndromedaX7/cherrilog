@@ -1,11 +1,9 @@
 import 'package:cherrilog/cherrilog.dart';
 
 void main() {
-  CherriLog.init(
-    options: CherriOptions()
-      ..logLevelRange = CherriLogLevelRanges.all
-      ..useBuffer = false,
-  ).logTo(CherriConsole()); // Use `CherriFile()` instead of `CherriConsole` if you want to log to file system
+  CherriLog.init().logTo(CherriConsole(), options: CherriOptions()
+    ..logLevelRange = CherriLogLevelRanges.all
+    ..useBuffer = false,); // Use `CherriFile()` instead of `CherriConsole` if you want to log to file system
 
   debug('You are doing something right');
 

@@ -7,11 +7,14 @@ void main() {
   group('A group of normal logs to console', () {
     setUp(() {
       CherriLog.init(
-        options: CherriOptions()
-          ..logLevelRange = CherriLogLevelRanges.all
-          ..timeStampPattern = CherriFormatterTimeStampPattern.standardLongDateTime
-          ..useBuffer = false,
-      ).logTo(CherriConsole());
+
+      ).logTo(CherriConsole(), options: CherriOptions()
+        ..logLevelRange = CherriLogLevelRanges.all
+        ..timeStampPattern = CherriFormatterTimeStampPattern.standardLongDateTime
+        ..useBuffer = false,).logTo(CherriFile(), options: CherriOptions()
+        ..logLevelRange = CherriLogLevelRanges.all
+        ..timeStampPattern = CherriFormatterTimeStampPattern.standardLongDateTime
+        ..useBuffer = true,);
 
       expect(CherriLog.instance, isNotNull);
     });
@@ -39,12 +42,10 @@ void main() {
 
   group('A group of normal logs to file', () {
     setUp(() {
-      CherriLog.init(
-        options: CherriOptions()
-          ..logLevelRange = CherriLogLevelRanges.all
-          ..timeStampPattern = CherriFormatterTimeStampPattern.standardLongDateTime
-          ..useBuffer = false,
-      ).logTo(CherriFile());
+      CherriLog.init( ).logTo(CherriFile(),  options: CherriOptions()
+        ..logLevelRange = CherriLogLevelRanges.all
+        ..timeStampPattern = CherriFormatterTimeStampPattern.standardLongDateTime
+        ..useBuffer = false,);
     });
 
     test('All level log test', () {
@@ -56,7 +57,7 @@ void main() {
     });
 
     test('Outer single file size test', () {
-      (CherriLog.instance!.logger as CherriFile).singleFileSizeLimit = BinarySize.parse('256 B')!;
+      (CherriLog.instance!.loggers.first as CherriFile).singleFileSizeLimit = BinarySize.parse('256 KB')!;
 
       for (var i = 0; i < 10; ++i) {
         info('A' * 300);

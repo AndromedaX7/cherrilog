@@ -17,26 +17,23 @@ export 'package:cherrilog/model/options.dart';
 class CherriLog {
   static CherriLog? instance;
 
-  static CherriLog init({CherriOptions? options}) {
-    instance = CherriLog()..withOptions(options ?? CherriOptions());
+  static CherriLog init( ) {
+    instance = CherriLog();
 
     return instance!;
   }
 
-  late CherriOptions options;
+  List<CherriLogger> loggers = List.empty(growable: true);
 
-  void withOptions(CherriOptions options) {
-    this.options = options;
-  }
-
-  late CherriLogger logger;
-
-  void logTo(CherriLogger logger) {
-    this.logger = logger..withOptions(options);
+  CherriLog logTo(CherriLogger logger, {CherriOptions? options}) {
+    loggers.add(logger..withOptions(options ?? CherriOptions()));
+    return this;
   }
 
   void log(CherriMessage message) {
-    logger.log(message);
+    loggers.forEach((logger) {
+      logger.log(message);
+    });
 
     // TODO: Implement flush interval
   }
